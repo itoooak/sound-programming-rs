@@ -1,9 +1,9 @@
 use std::env;
-use std::mem::size_of;
-use std::process::exit;
+use std::f64::consts::PI;
 use std::fs::File;
 use std::io::Write;
-use std::f64::consts::PI;
+use std::mem::size_of;
+use std::process::exit;
 
 type Sample = i16;
 const HEADER_LEN: u32 = 44;
@@ -33,8 +33,7 @@ fn main() {
     let byte_per_sample: u16 = SAMPLE_SIZE as u16 * channel;
     let bit_per_sample: u16 = SAMPLE_SIZE as u16 * 8;
 
-    let filename = args[1].to_owned() + ".wav";
-    let mut f = File::create(filename.as_str()).expect("ファイルの作成に失敗しました");
+    let mut f = File::create(args[1].to_owned()).expect("ファイルの作成に失敗しました");
 
     f.write(b"RIFF").unwrap();
     f.write(file_size).unwrap();
@@ -52,7 +51,10 @@ fn main() {
     println!("Output WAVE data is");
     println!("Channel = {} ch", channel);
     println!("Sample rate = {} Hz", fs_out);
-    println!("Sample number = {}", data_len / channel as u32 / SAMPLE_SIZE);
+    println!(
+        "Sample number = {}",
+        data_len / channel as u32 / SAMPLE_SIZE
+    );
 
     let mut t_out = 0;
 
