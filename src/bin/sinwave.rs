@@ -22,7 +22,7 @@ fn main() {
     let fs_out: u32 = 16000;
     let len: u32 = 16000;
     let data_len: u32 = SAMPLE_SIZE * channel as u32 * len;
-    let freqency: f64 = 1000.0;
+    let frequency: f64 = 1000.0;
 
     let file_size: u32 = HEADER_LEN + data_len - 8;
     let file_size = &file_size.to_le_bytes();
@@ -57,7 +57,7 @@ fn main() {
     let mut t_out = 0;
 
     while t_out < len {
-        let y: f64 = 0.5 * f64::sin(2.0 * PI * freqency / fs_out as f64 * t_out as f64);
+        let y: f64 = 0.5 * f64::sin(2.0 * PI * frequency / fs_out as f64 * t_out as f64);
         let output: Sample = (y * 32768.0) as i16;
         let output = &output.to_le_bytes();
         f.write(output).unwrap();
